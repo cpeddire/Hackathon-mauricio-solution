@@ -22,7 +22,7 @@ spec:
     spec:
      containers:
      - name: adjudify-app
-       image: 397655272214.dkr.ecr.us-east-1.amazonaws.com/eks-app-repo:latest
+       image: 123456789.dkr.ecr.us-east-1.amazonaws.com/eks-app-repo:1.2
        imagePullPolicy: IfNotPresent
        resources:
          requests:

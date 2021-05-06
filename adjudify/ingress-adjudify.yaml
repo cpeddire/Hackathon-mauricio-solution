@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
-  - host: eks.hackathon.rxss.me
+  - host: eks.hackathon.me
     http:
       paths:
         - path: /

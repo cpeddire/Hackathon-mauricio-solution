@@ -14,7 +14,7 @@ metadata:
       rewrite ^(/dashboard)$ $1/ redirect;
 spec: 
   rules:
-  - host: eks.hackathon.rxss.me
+  - host: eks.hackathon.me
     http:
       paths:
       - path: /dashboard(/|$)(.*)

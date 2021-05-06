@@ -1,0 +1,27 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: chocolate-app
+  namespace: ingress-nginx
+  labels:
+    app: chocolate
+spec:
+  containers:
+    - name: chocolate-app
+      image: hashicorp/http-echo
+      args:
+        - "-text=chocolate"
+        - "-listen=:80"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: chocolate-service
+  namespace: ingress-nginx
+spec:
+  selector:
+    app: chocolate
+  ports:
+    - port: 80

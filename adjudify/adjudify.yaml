@@ -1,0 +1,59 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: adjudify
+  labels:
+    name: adjudify
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adjudify-app
+  namespace: adjudify
+spec:
+  selector:
+    matchLabels:
+      app: adjudify-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: adjudify-app
+    spec:
+     containers:
+     - name: adjudify-app
+       image: 397655272214.dkr.ecr.us-east-1.amazonaws.com/eks-app-repo:latest
+       imagePullPolicy: IfNotPresent
+       resources:
+         requests:
+           memory: "256Mi" # 128 MebiByte is equal to 135 Megabyte (MB)
+           cpu: "500m" # `m` means milliCPU
+         limits:
+           memory: "500Mi"
+           cpu: "1000m"  #
+       ports:
+       - containerPort: 8098
+       env:
+         - name: DATADOG_TRACE_AGENT_HOSTNAME
+           valueFrom:
+             fieldRef:
+               fieldPath: status.hostIP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: adjudify-service
+  namespace: adjudify
+  annotations:
+    ad.datadoghq.com/adjudify-app.logs: '[{"source":"adjudify-app","service":"adjudify-service"}]'
+spec:
+  ports:
+  - name: web
+    port: 80
+    targetPort: 8098
+    protocol: TCP
+  selector:
+    app: adjudify-app
+  type: ClusterIP
+
+

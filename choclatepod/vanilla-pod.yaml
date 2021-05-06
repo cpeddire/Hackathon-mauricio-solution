@@ -1,0 +1,27 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: vanilla-app
+  namespace: ingress-nginx
+  labels:
+    app: vanilla
+spec:
+  containers:
+    - name: vanilla-app
+      image: hashicorp/http-echo
+      args:
+        - "-text=vanilla"
+        - "-listen=:80"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: vanilla-service
+  namespace: ingress-nginx
+spec:
+  selector:
+    app: vanilla
+  ports:
+    - port: 80

@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: flavors-ingress
+  namespace: ingress-nginx
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    #nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  rules:
+  - host: eks.hackathon.rxss.me
+    http:
+      paths:
+        - path: /cho
+          backend:
+            serviceName: chocolate-service
+            servicePort: 80
+        - path: /van
+          backend:
+            serviceName: vanilla-service
+            servicePort: 80
